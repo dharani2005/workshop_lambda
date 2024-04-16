@@ -47,36 +47,66 @@ public class DataStorageImpl implements DataStorage {
 
     @Override
     public Person findOne(Predicate<Person> filter) {
-        //todo: implement the method
-        return null;
+        Person result = null;
+        for(Person person: personList){
+            if(filter.test(person)){
+                result =person ;
+            }
+        }
+        return result;
     }
 
     @Override
     public String findOneAndMapToString(Predicate<Person> filter, Function<Person, String> personToString) {
-        //todo: implement the method
+        for(Person person:personList)
+        {
+            if(filter.test(person)) {
+                return personToString.apply(person);
+            }
+        }
         return null;
     }
 
     @Override
     public List<String> findManyAndMapEachToString(Predicate<Person> filter, Function<Person, String> personToString) {
-        //todo: implement the method
-        return null;
+        List<Person> result = new ArrayList<>();
+         List<String> persons= new ArrayList<>();
+        for(Person person : personList)
+        {
+            if(filter.test(person)){
+                result.add(person);
+                personToString.apply(person);
+            }
+        }
+        return persons;
     }
 
     @Override
     public void findAndDo(Predicate<Person> filter, Consumer<Person> consumer) {
-        //todo: implement the method
+        for(Person person : personList)
+        {
+            if(filter.test(person)){
+                consumer.accept(person);
+            }
+        }
     }
 
     @Override
     public List<Person> findAndSort(Comparator<Person> comparator) {
-        //todo: implement the method
-        return null;
+        List<Person> personList1= new ArrayList<>(personList);
+        personList1.sort(comparator);
+        return personList1;
     }
 
     @Override
     public List<Person> findAndSort(Predicate<Person> filter, Comparator<Person> comparator) {
-        //todo: implement the method
-        return null;
+     List<Person> personList1=new ArrayList<>();
+        for(Person person:personList)
+        {
+            if(filter.test(person)){
+            personList.sort(comparator);
+        }
+        }
+        return personList1;
     }
 }
